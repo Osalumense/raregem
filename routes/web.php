@@ -1,7 +1,11 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CategoriesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,23 +22,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin', function () {
-    return view('admin.index');
-});
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+Route::get('/admin/login', [AdminController::class, 'adminLogin'])->name('admin.login');
+Route::post('/admin/login', [AdminController::class, 'loginAction'])->name('admin.login.submit');
+
 // Admin Group Middleware
-// Route::middleware(['auth','roles:admin'])->group(function() {
+Route::prefix('/admin')->middleware(['auth','roles:admin,super_admin'])->group(function() {
+    Route::get('/dashboard', [AdminController::class, 'adminDashboard'])->name('admin.dashboard');
 
-// });
-
-// Super admin Group Middleware
-// Route::middleware(['auth','roles:super_admin'])->group(function() {
-
-// });
+    //Categories
+    Route::get('/categories', [AdminController::class, 'showCategories'])->name('admin.categories');
+    Route::get('/categories/add', [AdminController::class, 'addCategories'])->name('admin.categories.add');
+    Route::post('/categories/add', [CategoriesController::class, 'storeCategories'])->name('admin.categories.store');
+    Route::post('/categories/temp-upload', [AdminController::class, 'tempUpload'])->name('admin.categories.temp-upload');
+});
 
 
 Route::middleware('auth')->group(function () {

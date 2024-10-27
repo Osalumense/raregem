@@ -11,10 +11,17 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('backend/assets/css/app.css')}}"/>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css" />
 
     @yield('styles')
     
-    <script src="https://cdn.tailwindcss.com"></script>
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
     <title>RareGem Fashion Hub Dashboard</title>
 </head>
@@ -219,6 +226,9 @@
                     class="bg-green-200 text-green-800 px-4 py-2 rounded-md text-lg flex items-center mx-auto w-3/4 xl:w-2/4">
                     <span class=" mx-auto"><i class='bx bxs-check-circle mr-2'></i>
                         {!! session('success') !!} </span>
+                    <button @click="show = false" class="ml-4 text-green-900 hover:text-green-600">
+                        <i class="bx bx-x text-2xl"></i>
+                    </button>
                 </div>
             </div>
         @endif
@@ -234,6 +244,9 @@
                     class="bg-red-200 text-red-800 px-4 py-2 rounded-md text-lg flex items-center mx-auto w-3/4 xl:w-2/4">
                     <span class=" mx-auto"><i class='bx bxs-x-circle mr-2'></i> {!! session('error') !!}
                     </span>
+                    <button @click="show = false" class="ml-4 text-red-800 hover:text-red-600">
+                        <i class="bx bx-x text-2xl"></i>
+                    </button>
                 </div>
             </div>
         @endif
@@ -258,6 +271,9 @@
                     class="bg-blue-200 text-blue-600 px-4 py-2 rounded-md text-lg flex items-center mx-auto w-3/4 xl:w-2/4">
                     <span class="mx-auto"><i class='bx bxs-error mr-2'></i> {!! session('info') !!}
                     </span>
+                    <button @click="show = false" class="ml-4 text-blue-600 hover:text-blue-500">
+                        <i class="bx bx-x text-2xl"></i>
+                    </button>
                 </div>
             </div>
         @endif
